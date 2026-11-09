@@ -1,0 +1,17 @@
+{
+  "name": "amazon-cypress-challenge",
+  "version": "1.0.0",
+  "description": "Cypress QA automation assignment - amazon.com",
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test:task2": "cypress run --spec cypress/e2e/task2-customer-service.cy.js",
+    "test:task3": "cypress run --spec cypress/e2e/task3-cart.cy.js"
+  },
+  "devDependencies": {
+    "cypress": "^16.2.1"
+  },
+  "allowScripts": {
+    "cypress@16.2.1": true
+  }
+}
