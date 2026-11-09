@@ -1,6 +1,5 @@
 # Amazon – Desafio de Automação de Testes com Cypress
 
-[English](README.md) | **Português (BR)**
 
 Testes automatizados para o [Amazon.com](https://www.amazon.com/) desenvolvidos com [Cypress](https://www.cypress.io/), utilizando o padrão **Page Object Model (POM)**.
 
