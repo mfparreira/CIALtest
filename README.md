@@ -2,37 +2,64 @@
 
 [English](README.md) | **Português (BR)**
 
-Testes automatizados para amazon.com feitos com [Cypress](https://www.cypress.io/) usando o padrão Page Object.
+Testes automatizados para o [Amazon.com](https://www.amazon.com/) desenvolvidos com [Cypress](https://www.cypress.io/), utilizando o padrão **Page Object Model (POM)**.
+
+---
+
+## Índice
+
+- [Estrutura do projeto](#estrutura-do-projeto)
+- [Pré-requisitos](#pré-requisitos)
+- [Instalação](#instalação)
+- [Execução dos testes](#execução-dos-testes)
+- [Task 1 – Planejamento dos testes](#task-1--planejamento-e-documentação-dos-casos-de-teste)
+- [Dados de teste](#dados-de-teste)
+- [Decisões de design](#decisões-de-design)
+- [Desvios em relação ao enunciado](#desvios-em-relação-ao-enunciado-e-por-quê)
+- [Limitações conhecidas](#limitações-conhecidas)
+
+---
 
 ## Estrutura do projeto
 
-```
+```text
 .
-├── cypress.config.js              # baseUrl, timeouts, retries
+├── cypress.config.js
 ├── package.json
 ├── docs/
-│   ├── task1-test-cases.pdf       # Task 1 (inglês + português): 5 títulos de teste + 1 caso de teste completo
-│   ├── task1-test-cases.md        # mesmo conteúdo, inglês
-│   └── task1-test-cases.pt-BR.md  # mesmo conteúdo, português
+│   ├── task1-test-cases.pdf
+│   ├── task1-test-cases.md
+│   └── task1-test-cases.pt-BR.md
 └── cypress/
     ├── e2e/
-    │   ├── task2-customer-service.cy.js   # Task 2
-    │   └── task3-cart.cy.js               # Task 3 (beforeEach / afterEach)
+    │   ├── task2-customer-service.cy.js
+    │   └── task3-cart.cy.js
     ├── fixtures/
-    │   └── testData.json                  # dados de teste (produtos, país, itens do menu)
+    │   └── testData.json
     └── support/
-        ├── commands.js                    # visitAmazon, continueIfInterstitial, failOnBotCheck
+        ├── commands.js
         ├── e2e.js
-        └── pages/                         # Page objects
+        └── pages/
 ```
+
+| Arquivo / diretório | Descrição |
+|---|---|
+| `cypress.config.js` | Configurações do Cypress, como `baseUrl`, timeouts e retries. |
+| `docs/` | Documentação da Task 1 em PDF, inglês e português. |
+| `cypress/e2e/` | Testes automatizados das Tasks 2 e 3. |
+| `cypress/fixtures/testData.json` | Dados utilizados pelos testes, como produtos, país e itens do menu. |
+| `cypress/support/commands.js` | Comandos customizados para navegação e tratamento de intersticiais e bloqueios. |
+| `cypress/support/pages/` | Page Objects utilizados para encapsular os elementos e as ações das páginas. |
 
 ## Pré-requisitos
 
-- [Node.js](https://nodejs.org/) 18 ou superior
-- npm (já vem com o Node.js)
-- Google Chrome (recomendado) – o Electron também funciona
+- [Node.js](https://nodejs.org/) 18 ou superior;
+- npm (incluído na instalação do Node.js);
+- Google Chrome (recomendado). O Electron também pode ser utilizado.
 
 ## Instalação
+
+Clone o repositório e instale as dependências:
 
 ```bash
 git clone <url-do-repositorio>
@@ -40,118 +67,130 @@ cd amazon-cypress-challenge
 npm install
 ```
 
-## Executando os testes
+## Execução dos testes
+
+### Abrir o Cypress em modo interativo
 
 ```bash
-# Modo interativo (Cypress Test Runner)
 npm run cy:open
-
-# Headless – todos os specs
-npm run cy:run
-
-# Headless – uma task específica
-npm run test:task2
-npm run test:task3
-
-# Usando o Chrome
-npx cypress run --browser chrome
-
 ```
 
-Task 1 – Planejamento e documentação dos casos de teste
+### Executar todos os testes em modo headless
 
-A primeira etapa do desafio consistiu na análise dos principais fluxos funcionais da Amazon e na definição de cinco cenários de teste prioritários, documentados em docs/task1-test-cases.md.
+```bash
+npm run cy:run
+```
 
-Cenários de teste definidos
+### Executar uma task específica
 
-Foram considerados os seguintes fluxos:
+```bash
+npm run test:task2
+npm run test:task3
+```
 
-Pesquisa de produtos: verificar a relevância dos resultados apresentados.
+### Executar utilizando o Google Chrome
 
-Adição ao carrinho: validar a inclusão de produtos e suas respectivas informações.
+```bash
+npx cypress run --browser chrome
+```
 
-Gerenciamento do carrinho: verificar alteração de quantidades, remoção de produtos e atualização do subtotal.
+---
 
-Frete grátis: validar a aplicação da regra de frete conforme o subtotal e o país de entrega.
+## Task 1 – Planejamento e documentação dos casos de teste
 
-Checkout: verificar o redirecionamento para autenticação, preservando os itens adicionados ao carrinho.
+A primeira etapa do desafio consistiu na análise dos principais fluxos funcionais da Amazon e na definição de **cinco cenários de teste prioritários**.
 
-Caso de teste detalhado
+A documentação completa está disponível em:
+
+- [`docs/task1-test-cases.pdf`](docs/task1-test-cases.pdf) – versão bilíngue;
+- [`docs/task1-test-cases.md`](docs/task1-test-cases.md) – versão em inglês;
+- [`docs/task1-test-cases.pt-BR.md`](docs/task1-test-cases.pt-BR.md) – versão em português.
+
+### Cenários de teste definidos
+
+| # | Cenário | Objetivo |
+|---:|---|---|
+| 1 | Pesquisa de produtos | Verificar a relevância dos resultados apresentados. |
+| 2 | Adição ao carrinho | Validar a inclusão de produtos e suas respectivas informações. |
+| 3 | Gerenciamento do carrinho | Verificar alteração de quantidades, remoção de produtos e atualização do subtotal. |
+| 4 | Frete grátis | Validar a aplicação da regra de frete conforme o subtotal e o país de entrega. |
+| 5 | Checkout | Verificar o redirecionamento para autenticação, preservando os itens adicionados ao carrinho. |
+
+### Caso de teste detalhado
 
 Além dos cinco cenários, foi elaborado um caso de teste completo:
 
-Campo
-
-Descrição
-
-Identificação
-
-TC-CART-002
-
-Objetivo
-
-Validar a adição de um produto ao carrinho
-
-Prioridade
-
-P1
-
-Documentação
-
-docs/task1-test-cases.md
+| Campo | Descrição |
+|---|---|
+| **Identificação** | `TC-CART-002` |
+| **Objetivo** | Validar a adição de um produto ao carrinho. |
+| **Prioridade** | P1 |
+| **Documentação** | `docs/task1-test-cases.md` |
 
 O caso de teste apresenta:
 
-Pré-condições e dados necessários para execução;
+- Pré-condições e dados necessários para execução;
+- Passos detalhados de execução;
+- Resultados esperados para cada etapa;
+- Pós-condições e procedimentos de limpeza;
+- Observações sobre possíveis riscos e particularidades do ambiente.
 
-Passos detalhados de execução;
+**Objetivo da etapa:** demonstrar a capacidade de analisar os requisitos, identificar fluxos críticos e planejar a cobertura funcional antes da implementação da automação, reduzindo ambiguidades e prevenindo falsos positivos nos testes.
 
-Resultados esperados para cada etapa;
+---
 
-Pós-condições e procedimentos de limpeza;
-
-Observações sobre possíveis riscos e particularidades do ambiente.
-
-Objetivo da etapa
-
-Demonstrar a capacidade de analisar os requisitos, identificar fluxos críticos e planejar a cobertura funcional antes da implementação da automação, reduzindo ambiguidades e prevenindo falsos positivos nos testes.
 ## Dados de teste
 
-Todos os dados ficam em `cypress/fixtures/testData.json`: país de entrega (Hong Kong), itens esperados do menu principal, termos de busca, texto de busca e palavras-chave do produto, URL do produto, opções de cor e quantidade de apontadores extras.
+Todos os dados utilizados pelos testes estão centralizados em `cypress/fixtures/testData.json`.
+
+O arquivo contém, entre outras informações:
+
+- País de entrega (Hong Kong);
+- Itens esperados do menu principal;
+- Termos e textos de busca;
+- Palavras-chave e URL do produto;
+- Opções de cor;
+- Quantidade de apontadores adicionais.
 
 ## Decisões de design
 
-- **Testes independentes:** a Task 3 usa `beforeEach` para adicionar os dois produtos e `afterEach` para esvaziar o carrinho. O Cypress limpa os cookies entre os testes (`testIsolation`), então cada teste começa com um carrinho de visitante vazio e a suíte pode rodar em paralelo.
-- **Sem falsos positivos:** as asserções verificam texto e elementos reais (linhas do carrinho identificadas por título e cor, mensagem de frete grátis comparada com subtotal e limite, rótulo da cor selecionada e variante). Nenhum preço fixo no código.
-- **Limpeza estrita:** o `afterEach` falha se sobrar qualquer linha ativa no carrinho; a mensagem de carrinho vazio não substitui a checagem das linhas. Se uma linha ativa não tiver o botão Delete, a limpeza falha com uma mensagem de diagnóstico.
-- **Verificação do painel lateral:** depois de cada "Add to Cart", o teste confere o painel de confirmação ("Cart Subtotal" e "Proceed to checkout (N items)"): 1 item após o apontador, 2 itens e subtotal maior após a tesoura.
-- **Proteção contra bots:** a Amazon às vezes mostra a tela "Click the button below to continue shopping"; `cy.continueIfInterstitial()` clica em "Continue shopping" como um usuário faria. `cy.failOnBotCheck()` continua falhando com uma mensagem clara (o que foi detectado + URL) se um CAPTCHA real for exibido, de modo que uma página bloqueada nunca é reportada como defeito do produto.
-- **Retries:** testes que falham são repetidos até duas vezes no modo `run`, para absorver instabilidade de rede.
+- **Testes independentes:** a Task 3 utiliza `beforeEach` para adicionar os dois produtos e `afterEach` para esvaziar o carrinho. O Cypress limpa os cookies entre os testes (`testIsolation`), permitindo que cada teste comece com um carrinho de visitante vazio e que a suíte seja executada de forma independente.
+- **Asserções para evitar falsos positivos:** as verificações utilizam textos e elementos reais, como linhas do carrinho identificadas por título e cor, mensagem de frete grátis comparada com subtotal e limite, rótulo da cor selecionada e variante. Nenhum preço é fixado no código.
+- **Limpeza estrita:** o `afterEach` falha se houver qualquer linha ativa no carrinho. A mensagem de carrinho vazio não substitui a verificação das linhas. Se uma linha ativa não possuir o botão `Delete`, a limpeza falha com uma mensagem de diagnóstico.
+- **Verificação do painel lateral:** após cada ação `Add to Cart`, o teste verifica o painel de confirmação (`Cart Subtotal` e `Proceed to checkout (N items)`): um item após adicionar o apontador; dois itens e subtotal maior após adicionar a tesoura.
+- **Proteção contra bots:** a Amazon pode exibir a tela `Click the button below to continue shopping`. O comando `cy.continueIfInterstitial()` clica em `Continue shopping`, simulando a ação de um usuário. Se um CAPTCHA real for exibido, `cy.failOnBotCheck()` interrompe o teste com uma mensagem clara, incluindo o que foi detectado e a URL.
+- **Retries:** no modo `run`, testes com falha podem ser repetidos até duas vezes para absorver instabilidades de rede.
 
 ## Desvios em relação ao enunciado (e por quê)
 
-A amazon.com é um site ao vivo: layout, catálogo, preços e regras de frete mudam por país e ao longo do tempo. As telas do enunciado foram capturadas com outro país de entrega (Israel) e um layout mais antigo, então alguns passos não podem ser reproduzidos literalmente. Cada desvio abaixo mantém a intenção do passo e continua falhando quando o comportamento está errado.
+A Amazon é um site em produção: layout, catálogo, preços e regras de frete podem mudar conforme o país e o período. As telas do enunciado foram capturadas com outro país de entrega (Israel) e um layout anterior. Por isso, alguns passos não podem ser reproduzidos literalmente.
 
-### Task 3, passo 10 – "you do not qualify for free shipping"
+Os ajustes descritos abaixo preservam a intenção dos cenários e mantêm as verificações capazes de identificar comportamentos incorretos.
 
-- **Enunciado:** com os dois produtos iniciais, o carrinho mostra *"Add $26.50 of eligible items to your order for FREE Shipping"* (limite de **$49**, Israel). O passo 12 espera então que o pedido qualifique depois de mais 3 apontadores.
-- **O que observamos (entrega em Hong Kong, permitida pelo enunciado):** o limite de frete grátis é **$35**, exibido na página como *"FREE Shipping to Hong Kong when you spend over $35"*, e o carrinho com os dois produtos iniciais pode já mostrar *"Your order qualifies for FREE Shipping"*, dependendo dos preços das variantes. Um teste que fixa "não qualifica" falharia por um motivo que não é defeito, ou seja, um falso negativo.
-- **O que o teste faz no lugar** (`CartPage.assertFreeShippingMatchesSubtotal`): lê o **subtotal** e o **limite** da página e verifica os dois lados da regra – quando `subtotal >= limite`, a mensagem "qualifies" deve aparecer e a mensagem "add $X" deve estar oculta; quando está abaixo, a mensagem "add $X" deve aparecer e "qualifies" deve estar oculta. Se nenhuma mensagem aparecer, o teste falha. Nada é fixo no código, então o mesmo teste vale para qualquer país, preço ou limite.
-- **Passo 12** (`assertQualifiedForFreeShipping`) continua estrito: depois de aumentar a quantidade do apontador para 4, o subtotal deve ser **maior que o subtotal inicial** (uma página desatualizada não passa), atingir o limite e mostrar a mensagem "qualifies".
-- **Contrapartida:** o passo 10 não *força* mais um estado inicial "não elegível". Se for exigida essa checagem estrita, execute com um país cujo limite seja maior que o subtotal dos dois produtos (o cenário Israel/$49 do enunciado) e ajuste o passo 10 para esperar a mensagem "add $X".
+### Task 3 – Passo 10: mensagem de frete grátis
 
-### Task 2 – menu principal e "Customer Service"
+- **Enunciado:** com os dois produtos iniciais, o carrinho mostra *“Add $26.50 of eligible items to your order for FREE Shipping”* (limite de **US$ 49**, para Israel). O passo 12 espera que o pedido passe a ser elegível após adicionar mais três apontadores.
+- **Comportamento observado:** com entrega em Hong Kong, o limite exibido é **US$ 35** (*“FREE Shipping to Hong Kong when you spend over $35”*). Dependendo dos preços das variantes, o carrinho com os dois produtos iniciais já pode apresentar *“Your order qualifies for FREE Shipping”*. Fixar a expectativa de que o pedido não é elegível poderia gerar uma falha que não representa um defeito.
+- **Abordagem implementada:** `CartPage.assertFreeShippingMatchesSubtotal` lê o subtotal e o limite exibidos na página e valida os dois estados da regra:
+  - Quando `subtotal >= limite`, a mensagem de elegibilidade deve aparecer e a mensagem `add $X` deve ficar oculta.
+  - Quando `subtotal < limite`, a mensagem `add $X` deve aparecer e a mensagem de elegibilidade deve ficar oculta.
+  - Se nenhuma das mensagens aparecer, o teste falha.
+- **Passo 12:** `assertQualifiedForFreeShipping` mantém uma validação estrita. Após aumentar a quantidade do apontador para quatro, o subtotal deve ser maior que o subtotal inicial, atingir o limite e apresentar a mensagem de elegibilidade.
+- **Contrapartida:** o passo 10 não força mais um estado inicial de “não elegível”. Caso essa condição seja obrigatória, a execução deve utilizar um país cujo limite de frete seja superior ao subtotal inicial, como no cenário de Israel (US$ 49), e a expectativa do passo 10 deve ser ajustada para a mensagem `add $X`.
 
-- A barra superior depende do país e da época do ano. Em um layout observado (EUA, fim de ano) ela mostra *Holiday Gifts, Prime, Today's Deals, Registry, Gift Cards…* e **"Sell" / "Customer Service" não aparecem na barra nem no menu "All"**; em outro (entrega em Hong Kong) os dois aparecem. Por isso "Sell" não é validado, e "Customer Service" é clicado na barra quando existe e, caso contrário, pelo link equivalente **"Help"** no rodapé, que abre a mesma página `/gp/help/customer/display.html` (hoje com o título *"Welcome to Amazon Customer Service"*).
-- O idioma da página é forçado para inglês (`?language=en_US` e o header `Accept-Language`) para que as asserções de texto não dependam do idioma de quem executa.
+### Task 2 – Menu principal e Customer Service
 
-### Task 3 – produtos
+- A barra superior varia conforme o país e o período. Em um layout observado (EUA, fim de ano), aparecem opções como *Holiday Gifts, Prime, Today's Deals, Registry* e *Gift Cards*, enquanto `Sell` e `Customer Service` não aparecem na barra nem no menu `All`. Em outro layout (entrega em Hong Kong), essas opções aparecem.
+- Por esse motivo, `Sell` não é validado. O teste acessa `Customer Service` pela barra quando disponível; caso contrário, utiliza o link equivalente `Help`, no rodapé, que direciona para `/gp/help/customer/display.html`.
+- O idioma da página é definido como inglês (`?language=en_US` e o header `Accept-Language`) para evitar que as asserções de texto dependam do idioma configurado pelo usuário.
 
-- O título do apontador muda com frequência, então os resultados de busca e a página do produto são identificados por palavras-chave estáveis (`bostitch`, `electric pencil sharpener`, `stall-free motor`, modelo `EPS4-KTGRAY`) e a opção **Gray** é selecionada explicitamente, como no enunciado.
-- A Amazon renderiza o `<input>` real de "Add to Cart" com `opacity: 0.01` sobre um botão estilizado; o teste verifica que ele existe e está habilitado e clica diretamente nele. Depois, "Added to cart" é verificado, então uma falha ao adicionar ainda reprova o teste.
-- O carrinho mantém um modelo oculto de "removido do carrinho" dentro de cada linha, e mantém a linha (com essa mensagem visível) depois do "Delete". Por isso os helpers do carrinho contam apenas linhas **sem mensagem de remoção visível**.
+### Task 3 – Produtos
+
+- O título do apontador pode mudar com frequência. Por isso, os resultados de busca e a página do produto são identificados por palavras-chave mais estáveis (`bostitch`, `electric pencil sharpener`, `stall-free motor` e modelo `EPS4-KTGRAY`). A opção **Gray** é selecionada explicitamente, conforme o enunciado.
+- A Amazon renderiza o elemento `<input>` real de `Add to Cart` com `opacity: 0.01`, sobre um botão estilizado. O teste verifica se o elemento existe e está habilitado, realiza o clique e, em seguida, valida a mensagem `Added to cart`.
+- O carrinho mantém um modelo oculto de “removido do carrinho” dentro de cada linha e pode manter a linha no DOM após a ação `Delete`. Por isso, os helpers do carrinho contam apenas as linhas **sem mensagem de remoção visível**.
 
 ## Limitações conhecidas
 
-- A Amazon muda com frequência a marcação, as variantes de A/B test e os preços, e pode exibir CAPTCHA para tráfego automatizado. Se um seletor quebrar, atualize-o no page object correspondente em `cypress/support/pages/`.
-- Os seletores de localização de entrega em `HomePage.setDeliveryCountry` cobrem as duas variantes conhecidas do popover "Deliver to".
+- A Amazon altera frequentemente sua marcação HTML, variantes de testes A/B e preços, além de poder exibir CAPTCHA para tráfego automatizado. Se um seletor deixar de funcionar, ele deve ser atualizado no Page Object correspondente, em `cypress/support/pages/`.
+- Os seletores de localização de entrega em `HomePage.setDeliveryCountry` contemplam as duas variantes conhecidas do popover `Deliver to`.
