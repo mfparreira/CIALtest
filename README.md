@@ -58,21 +58,63 @@ npx cypress run --browser chrome
 
 ```
 
-### Task 1 – Planejamento e documentação dos casos de teste
+Task 1 – Planejamento e documentação dos casos de teste
 
+A primeira etapa do desafio consistiu na análise dos principais fluxos funcionais da Amazon e na definição de cinco cenários de teste prioritários, documentados em docs/task1-test-cases.md.
 
+Cenários de teste definidos
 
-A primeira etapa do desafio está documentada no arquivo docs/task1-test-cases.md.
-Nessa etapa, foi realizada a análise dos principais fluxos funcionais da Amazon, com a definição dos cinco cenários de teste considerados mais importantes para garantir a qualidade da aplicação.
-Os cenários contemplam:
-Pesquisa de produtos e relevância dos resultados.
-Adição de produtos ao carrinho e validação das informações.
-Alteração de quantidade, remoção de produtos e atualização do subtotal.
-Validação da regra de frete grátis conforme o subtotal e o país de entrega.
-Redirecionamento para autenticação durante o checkout, preservando os itens do carrinho.
-Além da identificação dos cinco cenários, foi elaborado um caso de teste completo (TC-CART-002), contendo identificação, prioridade, pré-condições, dados de teste, passos de execução, resultados esperados, pós-condições e observações sobre possíveis riscos.
-O objetivo dessa documentação é demonstrar o processo de análise e planejamento dos testes antes da automação, considerando a importância dos fluxos de negócio, a cobertura funcional e a prevenção de falsos positivos.
+Foram considerados os seguintes fluxos:
 
+Pesquisa de produtos: verificar a relevância dos resultados apresentados.
+
+Adição ao carrinho: validar a inclusão de produtos e suas respectivas informações.
+
+Gerenciamento do carrinho: verificar alteração de quantidades, remoção de produtos e atualização do subtotal.
+
+Frete grátis: validar a aplicação da regra de frete conforme o subtotal e o país de entrega.
+
+Checkout: verificar o redirecionamento para autenticação, preservando os itens adicionados ao carrinho.
+
+Caso de teste detalhado
+
+Além dos cinco cenários, foi elaborado um caso de teste completo:
+
+Campo
+
+Descrição
+
+Identificação
+
+TC-CART-002
+
+Objetivo
+
+Validar a adição de um produto ao carrinho
+
+Prioridade
+
+P1
+
+Documentação
+
+docs/task1-test-cases.md
+
+O caso de teste apresenta:
+
+Pré-condições e dados necessários para execução;
+
+Passos detalhados de execução;
+
+Resultados esperados para cada etapa;
+
+Pós-condições e procedimentos de limpeza;
+
+Observações sobre possíveis riscos e particularidades do ambiente.
+
+Objetivo da etapa
+
+Demonstrar a capacidade de analisar os requisitos, identificar fluxos críticos e planejar a cobertura funcional antes da implementação da automação, reduzindo ambiguidades e prevenindo falsos positivos nos testes.
 ## Dados de teste
 
 Todos os dados ficam em `cypress/fixtures/testData.json`: país de entrega (Hong Kong), itens esperados do menu principal, termos de busca, texto de busca e palavras-chave do produto, URL do produto, opções de cor e quantidade de apontadores extras.
